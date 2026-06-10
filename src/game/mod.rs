@@ -1,13 +1,29 @@
 mod actions;
 mod audio;
+mod collision;
 mod finish_areas;
 mod game_object;
 mod player;
-mod collision;
 
-pub use actions::ActionsPlugin;
-pub use audio::InternalAudioPlugin;
-pub use finish_areas::FinishAreaPlugin;
-pub use game_object::GameObjectPlugin;
-pub use player::PlayerPlugin;
+use bevy::prelude::*;
 
+use actions::ActionsPlugin;
+use audio::InternalAudioPlugin;
+use finish_areas::FinishAreaPlugin;
+use game_object::GameObjectPlugin;
+use player::PlayerPlugin;
+
+pub struct GamePlayPlugin;
+
+// This plugin is responsible to control the game audio
+impl Plugin for GamePlayPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_plugins((
+            ActionsPlugin,
+            InternalAudioPlugin,
+            FinishAreaPlugin,
+            GameObjectPlugin,
+            PlayerPlugin,
+        ));
+    }
+}

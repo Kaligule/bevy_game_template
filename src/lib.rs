@@ -1,14 +1,10 @@
 #![allow(clippy::type_complexity)]
 
+mod game;
 mod loading;
 mod menu;
-mod game;
 
-use crate::game::ActionsPlugin;
-use crate::game::InternalAudioPlugin;
-use crate::game::FinishAreaPlugin;
-use crate::game::GameObjectPlugin;
-use crate::game::PlayerPlugin;
+use crate::game::GamePlayPlugin;
 use crate::loading::LoadingPlugin;
 use crate::menu::MenuPlugin;
 
@@ -35,15 +31,8 @@ pub struct GamePlugin;
 
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
-        app.init_state::<GameState>().add_plugins((
-            LoadingPlugin,
-            MenuPlugin,
-            ActionsPlugin,
-            InternalAudioPlugin,
-            PlayerPlugin,
-            FinishAreaPlugin,
-            GameObjectPlugin,
-        ));
+        app.init_state::<GameState>()
+            .add_plugins((LoadingPlugin, MenuPlugin, GamePlayPlugin));
 
         #[cfg(debug_assertions)]
         {
