@@ -9,7 +9,6 @@ impl Plugin for GameObjectPlugin {
     }
 }
 
-
 #[derive(Component)]
 pub struct GameObject;
 
