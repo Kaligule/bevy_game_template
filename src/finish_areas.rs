@@ -1,7 +1,7 @@
 use crate::GameState;
 use crate::collision::CircleCollider;
-use crate::player::Player;
 use crate::game_object::GameObject;
+use crate::player::Player;
 use bevy::prelude::*;
 
 pub struct FinishAreaPlugin;
@@ -16,11 +16,15 @@ pub enum FinishArea {
 impl Plugin for FinishAreaPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(OnEnter(GameState::Playing), spawn_finish_areas)
-            .add_systems(Update, end_game_on_player_touch.run_if(in_state(GameState::Playing)));
+            .add_systems(
+                Update,
+                end_game_on_player_touch.run_if(in_state(GameState::Playing)),
+            );
     }
 }
 
-fn spawn_finish_areas(mut commands: Commands,
+fn spawn_finish_areas(
+    mut commands: Commands,
     mut materials: ResMut<Assets<ColorMaterial>>,
     mut meshes: ResMut<Assets<Mesh>>,
 ) {
@@ -28,18 +32,18 @@ fn spawn_finish_areas(mut commands: Commands,
     let circle = meshes.add(Circle::new(RADIUS));
     commands.spawn((
         Mesh2d(circle.clone()),
-        MeshMaterial2d(materials.add( Color::hsl(120., 0.95, 0.7) )),
+        MeshMaterial2d(materials.add(Color::hsl(120., 0.95, 0.7))),
         Transform::from_translation(Vec3::new(500., 0., 1.)),
         FinishArea::Win,
-        CircleCollider{radius: RADIUS},
+        CircleCollider { radius: RADIUS },
         GameObject,
     ));
     commands.spawn((
         Mesh2d(circle.clone()),
-        MeshMaterial2d(materials.add( Color::hsl(0., 0.95, 0.7) )),
+        MeshMaterial2d(materials.add(Color::hsl(0., 0.95, 0.7))),
         Transform::from_translation(Vec3::new(-500., 0., 1.)),
         FinishArea::Lose,
-        CircleCollider{radius: RADIUS},
+        CircleCollider { radius: RADIUS },
         GameObject,
     ));
 }

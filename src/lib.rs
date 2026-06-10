@@ -2,20 +2,20 @@
 
 mod actions;
 mod audio;
+mod collision;
+mod finish_areas;
+mod game_object;
 mod loading;
 mod menu;
 mod player;
-mod finish_areas;
-mod collision;
-mod game_object;
 
 use crate::actions::ActionsPlugin;
 use crate::audio::InternalAudioPlugin;
+use crate::finish_areas::FinishAreaPlugin;
+use crate::game_object::GameObjectPlugin;
 use crate::loading::LoadingPlugin;
 use crate::menu::MenuPlugin;
 use crate::player::PlayerPlugin;
-use crate::finish_areas::FinishAreaPlugin;
-use crate::game_object::GameObjectPlugin;
 
 use bevy::app::App;
 #[cfg(debug_assertions)]
