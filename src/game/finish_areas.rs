@@ -1,7 +1,7 @@
 use crate::GameState;
-use crate::collision::CircleCollider;
-use crate::game_object::GameObject;
-use crate::player::Player;
+use crate::game::collision::CircleCollider;
+use crate::game::game_object::GameObject;
+use crate::game::player::Player;
 use bevy::prelude::*;
 
 pub struct FinishAreaPlugin;

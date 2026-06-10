@@ -1,21 +1,16 @@
 #![allow(clippy::type_complexity)]
 
-mod actions;
-mod audio;
-mod collision;
-mod finish_areas;
-mod game_object;
 mod loading;
 mod menu;
-mod player;
+mod game;
 
-use crate::actions::ActionsPlugin;
-use crate::audio::InternalAudioPlugin;
-use crate::finish_areas::FinishAreaPlugin;
-use crate::game_object::GameObjectPlugin;
+use crate::game::ActionsPlugin;
+use crate::game::InternalAudioPlugin;
+use crate::game::FinishAreaPlugin;
+use crate::game::GameObjectPlugin;
+use crate::game::PlayerPlugin;
 use crate::loading::LoadingPlugin;
 use crate::menu::MenuPlugin;
-use crate::player::PlayerPlugin;
 
 use bevy::app::App;
 #[cfg(debug_assertions)]
