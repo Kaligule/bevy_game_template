@@ -1,7 +1,7 @@
 use crate::GameState;
-use crate::game::actions::Actions;
-use crate::game::collision::CircleCollider;
-use crate::game::game_object::GameObject;
+use crate::gameplay::actions::Actions;
+use crate::gameplay::collision::CircleCollider;
+use crate::gameplay::game_object::GameObject;
 use crate::loading::TextureAssets;
 use bevy::prelude::*;
 

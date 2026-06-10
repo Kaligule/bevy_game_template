@@ -1,10 +1,10 @@
 #![allow(clippy::type_complexity)]
 
-mod game;
+mod gameplay;
 mod loading;
 mod menu;
 
-use crate::game::GamePlayPlugin;
+use crate::gameplay::GameplayPlugin;
 use crate::loading::LoadingPlugin;
 use crate::menu::MenuPlugin;
 
@@ -32,7 +32,7 @@ pub struct GamePlugin;
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
         app.init_state::<GameState>()
-            .add_plugins((LoadingPlugin, MenuPlugin, GamePlayPlugin));
+            .add_plugins((LoadingPlugin, MenuPlugin, GameplayPlugin));
 
         #[cfg(debug_assertions)]
         {

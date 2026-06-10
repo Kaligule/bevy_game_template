@@ -13,10 +13,10 @@ use finish_areas::FinishAreaPlugin;
 use game_object::GameObjectPlugin;
 use player::PlayerPlugin;
 
-pub struct GamePlayPlugin;
+pub struct GameplayPlugin;
 
 // This plugin is responsible to control the game audio
-impl Plugin for GamePlayPlugin {
+impl Plugin for GameplayPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins((
             ActionsPlugin,
