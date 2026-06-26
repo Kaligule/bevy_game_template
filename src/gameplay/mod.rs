@@ -15,7 +15,6 @@ use player::PlayerPlugin;
 
 pub struct GameplayPlugin;
 
-// This plugin is responsible to control the game audio
 impl Plugin for GameplayPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins((
