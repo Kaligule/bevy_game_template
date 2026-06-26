@@ -71,11 +71,11 @@ fn end_game_on_player_touch(
             if dist_sq <= radius_sum * radius_sum {
                 match finish_area {
                     FinishArea::Win => {
-                        println!("Player won that game!");
+                        info!("Player won that game!");
                         next_state.set(GameState::Menu);
                     }
                     FinishArea::Lose => {
-                        println!("Player lost that game!");
+                        info!("Player lost that game!");
                         next_state.set(GameState::Menu);
                     }
                 }
