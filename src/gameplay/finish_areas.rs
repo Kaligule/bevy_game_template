@@ -27,13 +27,18 @@ fn spawn_finish_areas(
     mut commands: Commands,
     mut materials: ResMut<Assets<ColorMaterial>>,
     mut meshes: ResMut<Assets<Mesh>>,
+    windows: Query<&Window>,
 ) {
+    let window = windows.single().unwrap(); // Get window
+    let (win_area_translation, loose_area_translation) =
+        determine_area_placements(window.resolution.width(), window.resolution.height());
+
     const RADIUS: f32 = 50.;
     let circle = meshes.add(Circle::new(RADIUS));
     commands.spawn((
         Mesh2d(circle.clone()),
         MeshMaterial2d(materials.add(Color::hsl(120., 0.95, 0.7))),
-        Transform::from_translation(Vec3::new(500., 0., 1.)),
+        Transform::from_translation(win_area_translation),
         FinishArea::Win,
         CircleCollider { radius: RADIUS },
         GameObject,
@@ -41,11 +46,32 @@ fn spawn_finish_areas(
     commands.spawn((
         Mesh2d(circle.clone()),
         MeshMaterial2d(materials.add(Color::hsl(0., 0.95, 0.7))),
-        Transform::from_translation(Vec3::new(-500., 0., 1.)),
+        Transform::from_translation(loose_area_translation),
         FinishArea::Lose,
         CircleCollider { radius: RADIUS },
         GameObject,
     ));
+}
+
+// determine the placements of the win- and loosearea depending on the window dimensions
+fn determine_area_placements(window_width: f32, window_height: f32) -> (Vec3, Vec3) {
+    let distance_from_player: f32;
+
+    if window_width < window_height {
+        distance_from_player = window_height / 3.;
+        // portrait
+        return (
+            Vec3::new(0., distance_from_player, 1.),
+            Vec3::new(0., -distance_from_player, 1.),
+        );
+    } else {
+        distance_from_player = window_width / 3.;
+        // landscape
+        return (
+            Vec3::new(distance_from_player, 0., 1.),
+            Vec3::new(-distance_from_player, 0., 1.),
+        );
+    }
 }
 
 fn end_game_on_player_touch(
