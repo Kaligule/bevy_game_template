@@ -60,17 +60,17 @@ fn determine_area_placements(window_width: f32, window_height: f32) -> (Vec3, Ve
     if window_width < window_height {
         distance_from_player = window_height / 3.;
         // portrait
-        return (
+        (
             Vec3::new(0., distance_from_player, 1.),
             Vec3::new(0., -distance_from_player, 1.),
-        );
+        )
     } else {
         distance_from_player = window_width / 3.;
         // landscape
-        return (
+        (
             Vec3::new(distance_from_player, 0., 1.),
             Vec3::new(-distance_from_player, 0., 1.),
-        );
+        )
     }
 }
 
