@@ -29,7 +29,7 @@ fn spawn_game_camera(mut commands: Commands) {
 fn spawn_player(mut commands: Commands, textures: Res<TextureAssets>) {
     commands.spawn((
         Sprite::from_image(textures.bevy.clone()),
-        Transform::from_translation(Vec3::new(0., 0., 1.)),
+        Transform::from_translation(Vec3::new(0., 0., 2.)),
         Player,
         GameObject,
         CircleCollider { radius: 128. },
