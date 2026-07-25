@@ -28,8 +28,8 @@ fn spawn_finish_areas(
     mut materials: ResMut<Assets<ColorMaterial>>,
     mut meshes: ResMut<Assets<Mesh>>,
     windows: Query<&Window>,
-) {
-    let window = windows.single().unwrap(); // Get window
+) -> Result {
+    let window = windows.single()?;
     let (win_area_translation, loose_area_translation) =
         determine_area_placements(window.resolution.width(), window.resolution.height());
 
@@ -51,6 +51,8 @@ fn spawn_finish_areas(
         CircleCollider { radius: RADIUS },
         GameObject,
     ));
+
+    Ok(())
 }
 
 // determine the placements of the win- and loosearea depending on the window dimensions

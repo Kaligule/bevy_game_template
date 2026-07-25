@@ -16,7 +16,8 @@ impl Plugin for InternalAudioPlugin {
                 control_flying_sound
                     .after(set_movement_actions)
                     .run_if(in_state(GameState::Playing)),
-            );
+            )
+            .add_systems(OnExit(GameState::Playing), stop_audio);
     }
 }
 
@@ -31,6 +32,17 @@ fn start_audio(mut commands: Commands, audio_assets: Res<AudioAssets>, audio: Re
         .with_volume(0.3)
         .handle();
     commands.insert_resource(FlyingAudio(handle));
+}
+
+fn stop_audio(
+    mut commands: Commands,
+    audio: Res<FlyingAudio>,
+    mut audio_instances: ResMut<Assets<AudioInstance>>,
+) {
+    if let Some(mut instance) = audio_instances.get_mut(&audio.0) {
+        instance.stop(AudioTween::default());
+    }
+    commands.remove_resource::<FlyingAudio>();
 }
 
 fn control_flying_sound(
