@@ -27,6 +27,13 @@ enum GameState {
     Menu,
 }
 
+// The outcome of the last round of gameplay. Only available after the player won or lost once.
+#[derive(Resource, Clone, Copy, Eq, PartialEq, Debug)]
+enum GameResult {
+    Won,
+    Lost,
+}
+
 pub struct GamePlugin;
 
 impl Plugin for GamePlugin {

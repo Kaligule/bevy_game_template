@@ -1,7 +1,7 @@
-use crate::GameState;
 use crate::gameplay::collision::CircleCollider;
 use crate::gameplay::game_object::GameObject;
 use crate::gameplay::player::Player;
+use crate::{GameResult, GameState};
 use bevy::prelude::*;
 
 pub struct FinishAreaPlugin;
@@ -77,6 +77,7 @@ fn determine_area_placements(window_width: f32, window_height: f32) -> (Vec3, Ve
 }
 
 fn end_game_on_player_touch(
+    mut commands: Commands,
     mut next_state: ResMut<NextState<GameState>>,
     player_query: Query<(&Transform, &CircleCollider), With<Player>>,
     finish_query: Query<(&Transform, &CircleCollider, &FinishArea)>,
@@ -100,13 +101,15 @@ fn end_game_on_player_touch(
                 match finish_area {
                     FinishArea::Win => {
                         info!("Player won that game!");
-                        next_state.set(GameState::Menu);
+                        commands.insert_resource(GameResult::Won);
                     }
                     FinishArea::Lose => {
                         info!("Player lost that game!");
-                        next_state.set(GameState::Menu);
+                        commands.insert_resource(GameResult::Lost);
                     }
                 }
+                next_state.set(GameState::Menu);
+                return;
             }
         }
     }

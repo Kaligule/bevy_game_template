@@ -1,5 +1,5 @@
-use crate::GameState;
 use crate::loading::TextureAssets;
+use crate::{GameResult, GameState};
 use bevy::prelude::*;
 
 pub struct MenuPlugin;
@@ -32,8 +32,15 @@ impl Default for ButtonColors {
 #[derive(Component)]
 struct Menu;
 
-fn setup_menu(mut commands: Commands, textures: Res<TextureAssets>) {
-    info!("menu");
+fn setup_menu(
+    mut commands: Commands,
+    textures: Res<TextureAssets>,
+    game_result: Option<Res<GameResult>>,
+) {
+    let last_result = game_result.map(|result| match *result {
+        GameResult::Won => ("You won!", Color::hsl(120., 0.95, 0.7)),
+        GameResult::Lost => ("You lost!", Color::hsl(0., 0.95, 0.7)),
+    });
     commands.spawn((Camera2d, Msaa::Off, Menu));
     commands
         .spawn((
@@ -48,6 +55,20 @@ fn setup_menu(mut commands: Commands, textures: Res<TextureAssets>) {
             Menu,
         ))
         .with_children(|children| {
+            if let Some((text, color)) = last_result {
+                children.spawn((
+                    Text::new(text),
+                    TextFont {
+                        font_size: FontSize::Px(60.0),
+                        ..default()
+                    },
+                    TextColor(color),
+                    Node {
+                        margin: UiRect::bottom(Val::Px(30.)),
+                        ..default()
+                    },
+                ));
+            }
             let button_colors = ButtonColors::default();
             children
                 .spawn((
@@ -90,7 +111,7 @@ fn setup_menu(mut commands: Commands, textures: Res<TextureAssets>) {
                 .spawn((
                     Button,
                     Node {
-                        width: Val::Px(170.0),
+                        width: Val::Px(180.0),
                         height: Val::Px(50.0),
                         justify_content: JustifyContent::SpaceAround,
                         align_items: AlignItems::Center,
