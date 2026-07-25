@@ -36,30 +36,16 @@ dev = [
     "bevy/dynamic_linking",
 ]
 
-# All of Bevy's default features exept for the audio related ones (bevy_audio, vorbis), since they clash with bevy_kira_audio
-#   and android_shared_stdcxx/android-game-activity, since those are covered in `mobile`
+# Bevy's default features are `2d`, `3d`, `ui` and `audio`. We take all of them except for `audio`, since it clashes with bevy_kira_audio.
+# If your game doesn't need 3d (or 2d), dropping that collection here will cut down on compile times.
 [dependencies]
-bevy = { version = "0.18.0", default-features = false, features = [
-    "default_app",
-    "2d_api",
-    "2d_bevy_render",
-    "3d_api",
-    "3d_bevy_render",
-    "ui_api",
-    "ui_bevy_render",
-    "scene",
-    "picking",
-    "bevy_gilrs",
-    "bevy_winit",
-    "default_font",
-    "multi_threaded",
-    "webgl2",
-    "x11",
-    "wayland",
-    "sysinfo_plugin",
+bevy = { version = "0.19.0", default-features = false, features = [
+    "2d",
+    "3d",
+    "ui",
 ] }
-bevy_kira_audio = { version = "0.25", features = ["android_shared_stdcxx"] }
-bevy_asset_loader = { version = "0.25.0" }
+bevy_kira_audio = { version = "0.26" }
+bevy_asset_loader = { version = "0.27.0" }
 rand = { version = "0.9" }
 webbrowser = { version = "1", features = ["hardened"] }
 
